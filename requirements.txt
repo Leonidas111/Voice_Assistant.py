@@ -1,0 +1,6 @@
+comtypes==1.1.10
+PyAudio @ file:///C:/Users/LENOVO/Downloads/PyAudio-0.2.11-cp39-cp39-win_amd64.whl
+pypiwin32==223
+pyttsx3==2.90
+pywin32==301
+SpeechRecognition==3.8.1
