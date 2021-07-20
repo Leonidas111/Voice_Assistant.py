@@ -1,8 +1,8 @@
 import speech_recognition as sr
 import pyttsx3
 
+name = "benjamin"
 listener = sr.Recognizer()
-
 engine = pyttsx3.init()
 
 voices = engine.getProperty("voices")
@@ -13,11 +13,13 @@ def talk(text):
     engine.runAndWait()
 try:
     with sr.Microphone() as source:
-        talk("Estoy a sus ordenes mi Lord;lo escucho atentamente")
-        print("Listening ...")
         voice = listener.listen(source)
         rec = listener.recognize_google(voice)
-        talk(rec)
+        rec = rec.lower()
+        if name in rec:
+            talk("Estoy a sus ordenes mi Lord")
+            talk(rec)
+    #Guarda en historysearchs.txt:
     with open ("./historysearchs.txt","a",encoding="utf-8") as history:
         history.write("\n")
         history.write(rec)
