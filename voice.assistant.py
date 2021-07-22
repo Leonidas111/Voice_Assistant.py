@@ -4,43 +4,47 @@ import pywhatkit
 import datetime
 import wikipedia
 
-name = "alexa"
+
+name = "sirvienta"
 listener = sr.Recognizer()
 engine = pyttsx3.init()
 
 voices = engine.getProperty("voices")
 engine.setProperty("voice",voices[2].id)
-
+engine. setProperty('rate', 178)
+engine.setProperty('volume', 0.7)
 
 def talk(text):
     engine.say(text)
     engine.runAndWait()
 
-def listen():
+def funlisten(rec):
     try:
         with sr.Microphone() as source:
-            print("Escuchando...")
             voice = listener.listen(source)
-            rec = listener.recognize_google(voice)
-            rec = rec.lower()
+            rec = listener.recognize_google(voice, language='es-ES')
             if name in rec:
-                rec = rec.replace(name, "")
-                print(rec)
+                talk("Estoy a sus ordenes mi Lord")
+                print("Escuhando...")
+                rec = rec.replace(name, '')
+            else:
+                talk("Solo atiendo al llamado por mi nombre")
+        with open ("./historysearchs.txt","a",encoding="utf-8") as history:
+            history.write("\n")
+            history.write(rec)
     except:
-        pass
-    return rec
-
+        pass 
 def run():
-    rec = listen()
-    if "reproduce" in rec:
-        music = rec.replace("reproduce"," ")
-        talk("reproduciendo" + rec)
+    if 'reproduce' in rec:
+        music = rec.replace('reproduce', '')
+        talk('Reproduciendo ' + music)
         pywhatkit.playonyt(music)
-    if "hora" in rec:
-        hora = datetime.datetime().now().strftime("%I:%M %p")
-        talk("son las" + hora)
-    elif "busca" in rec:
-        order = rec.replace("busca","")
-        info = wikipedia.summary(order,1)
+    elif 'hora' in rec:
+        hora = datetime.datetime.now().strftime('%I:%M %p')
+        talk("Son las " + hora)
+    elif 'busca' in rec:
+        order = rec.replace('busca', '')
+        wikipedia.set_lang("es")
+        info = wikipedia.summary(order, 1)
         talk(info)
 run()
