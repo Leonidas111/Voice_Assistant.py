@@ -55,7 +55,7 @@ def run(rec):
         wikipedia.set_lang("es")
         info = wikipedia.summary(order, 1)
         talk(info)
-    elif 'exit' in rec:
+    elif 'salir' in rec:
         flag = 0
         talk("Saliendo...")
     else:
